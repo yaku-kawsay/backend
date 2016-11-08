@@ -143,8 +143,8 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jta="true" jndi-name="java:/datasources/ykDS" pool-name="ykDS" enabled="true" use-ccm="false">
-                    <connection-url>jdbc:mysql://localhost:3306/yk</connection-url>
+                <datasource jta="true" jndi-name="java:/datasources/yakukawsayDS" pool-name="yakukawsayDS" enabled="true" use-ccm="false">
+                    <connection-url>jdbc:mysql://localhost:3306/yakukawsay</connection-url>
                     <driver-class>com.mysql.jdbc.Driver</driver-class>
                     <driver>mysql</driver>
                     <new-connection-sql>select 1</new-connection-sql>
@@ -216,7 +216,7 @@
             <async thread-pool-name="default"/>
             <timer-service thread-pool-name="default" default-data-store="clustered-store">
                 <data-stores>
-                    <database-data-store name="clustered-store" datasource-jndi-name="java:/datasources/ykDS" database="mysql" partition="timer"/>
+                    <database-data-store name="clustered-store" datasource-jndi-name="java:/datasources/yakukawsayDS" database="mysql" partition="timer"/>
                 </data-stores>
             </timer-service>
             <remote connector-ref="http-remoting-connector" thread-pool-name="default"/>
@@ -427,3 +427,4 @@
         </outbound-socket-binding>
     </socket-binding-group>
 </server>
+
