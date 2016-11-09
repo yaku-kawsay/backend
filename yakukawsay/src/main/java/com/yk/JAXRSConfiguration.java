@@ -1,6 +1,5 @@
 package com.yk;
 
-import com.yk.user.boundary.UserResource;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -20,7 +19,7 @@ public class JAXRSConfiguration extends Application {
         Set<Class<?>> resources = new HashSet();
         
         //Currency
-        resources.add(UserResource.class);
+        //resources.add(UserResource.class);
 
         //Swagger configuration
         resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
