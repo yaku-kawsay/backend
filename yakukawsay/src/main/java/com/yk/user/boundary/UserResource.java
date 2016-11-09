@@ -5,7 +5,6 @@
  */
 package com.yk.user.boundary;
 
-import com.yk.entity.dto.notification.NotificationDTO;
 import io.swagger.annotations.Api;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
@@ -27,7 +26,7 @@ public class UserResource {
     
     @POST
     @Path("{deviceId}/noti")
-    public JsonObject renewToken(@PathParam("userId") Long userId, final NotificationDTO param) {
+    public JsonObject renewToken(@PathParam("userId") Long userId) {
         //log.log(Level.INFO, "Attempt to renew token manually");
         System.out.println("ingresa a esta funcion");
         return null;
