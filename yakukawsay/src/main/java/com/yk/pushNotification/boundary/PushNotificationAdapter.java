@@ -82,6 +82,7 @@ public class PushNotificationAdapter {
         catch(Exception e){
             logger.log(Level.SEVERE, "Some throuble with IONIC service", e);
         }
+
         return response;
     }
 

@@ -7,6 +7,7 @@ package com.yk.dataDevice.boundary;
 
 import com.yk.entity.Data;
 import com.yk.entity.Device;
+import com.yk.pushNotification.boundary.PushNotificationAdapter;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 import java.util.List;
@@ -44,6 +45,10 @@ public class DataDeviceResource {
     @Inject
     DeviceControl control;
     
+    @Inject
+    PushNotificationAdapter pushNotification;
+
+    
     @GET
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Get all ", response = JsonObject.class)
@@ -72,6 +77,9 @@ public class DataDeviceResource {
                 .add("message", "success")
                 .add("id", dataEntity.getId())
                 .build();
+        
+
+        pushNotification.sendPost("Sensor" + dataEntity.getDeviceId().getId() + ": " + dataEntity.getValue(), null, "Yakukawsay", true, null);
         return response;
     }
     
