@@ -1,12 +1,5 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  jhamil
- * Created: Nov 8, 2016
- */
+-- Author:  jhamil
+-- Created: Nov 8, 2016
 
 INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`) VALUES ('1', 'temperatura');
 INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`) VALUES ('2', 'humedad');
