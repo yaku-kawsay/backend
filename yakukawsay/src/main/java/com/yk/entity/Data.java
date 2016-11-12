@@ -10,6 +10,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,8 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Data implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DataPK dataPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Size(max = 45)
     @Column(name = "date")
     private String date;
@@ -45,27 +51,6 @@ public class Data implements Serializable {
     private long value;
 
     public Data() {
-    }
-
-    public Data(DataPK dataPK) {
-        this.dataPK = dataPK;
-    }
-
-    public Data(DataPK dataPK, long value) {
-        this.dataPK = dataPK;
-        this.value = value;
-    }
-
-    public Data(int id, int deviceid, int devicetypeindicatorid) {
-        this.dataPK = new DataPK(id, deviceid, devicetypeindicatorid);
-    }
-
-    public DataPK getDataPK() {
-        return dataPK;
-    }
-
-    public void setDataPK(DataPK dataPK) {
-        this.dataPK = dataPK;
     }
 
     public String getDate() {
@@ -83,22 +68,22 @@ public class Data implements Serializable {
     public void setValue(long value) {
         this.value = value;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (dataPK != null ? dataPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Data)) {
+        if (!(object instanceof TypeIndicator)) {
             return false;
         }
         Data other = (Data) object;
-        if ((this.dataPK == null && other.dataPK != null) || (this.dataPK != null && !this.dataPK.equals(other.dataPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -106,7 +91,7 @@ public class Data implements Serializable {
 
     @Override
     public String toString() {
-        return "com.yk.Data[ dataPK=" + dataPK + " ]";
+        return "com.yk.Data[ dataPK=" + id + " ]";
     }
     
 }

@@ -5,6 +5,8 @@
  */
 package com.yk.utils;
 
+import com.yk.entity.utils.CrudService;
+import com.yk.entity.utils.CrudServiceBean;
 import java.util.logging.Logger;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -16,6 +18,13 @@ import javax.persistence.PersistenceContext;
  * @author ubuntu
  */
 public class Resources {
+    @Produces
+    @PersistenceContext
+    private EntityManager em;
+    
+    public CrudService produceCrudService() {
+        return new CrudServiceBean(this.em);
+    }
     
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {

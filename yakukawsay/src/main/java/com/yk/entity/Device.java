@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -38,8 +40,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DevicePK devicePK;
+
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -64,28 +71,16 @@ public class Device implements Serializable {
     public Device() {
     }
 
-    public Device(DevicePK devicePK) {
-        this.devicePK = devicePK;
-    }
-
-    public Device(DevicePK devicePK, String model, Date date, String latitude, String longitude) {
-        this.devicePK = devicePK;
-        this.model = model;
-        this.date = date;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     public Device(int id, int typeIndicatorId) {
-        this.devicePK = new DevicePK(id, typeIndicatorId);
+        this.id = id;
     }
 
-    public DevicePK getDevicePK() {
-        return devicePK;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDevicePK(DevicePK devicePK) {
-        this.devicePK = devicePK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getModel() {
@@ -123,18 +118,18 @@ public class Device implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (devicePK != null ? devicePK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Device)) {
+        if (!(object instanceof TypeIndicator)) {
             return false;
         }
         Device other = (Device) object;
-        if ((this.devicePK == null && other.devicePK != null) || (this.devicePK != null && !this.devicePK.equals(other.devicePK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -142,7 +137,7 @@ public class Device implements Serializable {
 
     @Override
     public String toString() {
-        return "com.yk.Device[ devicePK=" + devicePK + " ]";
+        return "com.yk.Device[ devicePK=" + id + " ]";
     }
     
 }

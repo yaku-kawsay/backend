@@ -5,21 +5,18 @@
  */
 package com.yk.dataDevice.boundary;
 
+import com.yk.entity.Device;
 import io.swagger.annotations.ApiOperation;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.AccessTimeout;
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -37,12 +34,44 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class DataDeviceResource {
-    //@RolesAllowed({"USER"})
+    
+    @Inject
+    DeviceService service;
+    
+    @Inject
+    DeviceControl control;
+    
+    // @RolesAllowed({"USER"})
     @POST
-    @Path("dataDevice")
+    @Path("")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Send data ", response = JsonObject.class)
-    public JsonObject dataDevice(@PathParam("deviceId") Long id, @Context HttpServletRequest obj) {
-        return null;
-    }   
+    public JsonObject dataDevice(@PathParam("deviceId") Long id, JsonObject data) {
+        control.validateDeviceData(data);
+        
+        Device device = service.create(data);
+        
+        JsonObject response = Json.createObjectBuilder()
+                .add("message", "success")
+                .add("id", device.getId())
+                .build();
+        return response;
+    }
+
+    @GET
+    @Path("")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @ApiOperation(value = "Get all ", response = JsonObject.class)
+    public List<Device> getAll(@PathParam("id") Long id) {
+        return service.getAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @ApiOperation(value = "get device", response = JsonObject.class)
+    public Device getDevice(@PathParam("id") Long id) {
+        return service.getDevice(id);
+    }
+    
 }
