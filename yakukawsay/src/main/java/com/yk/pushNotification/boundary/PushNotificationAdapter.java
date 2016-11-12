@@ -24,8 +24,8 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
  *
  * @author jhamil
  */
-public class PushNotificationAdapter {
-    private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYzk0MzFhOS03ZjY1LTQyZjYtOGM4Ni1lNjljNWIxOTMzNjEifQ.0yKOnqAIS9dSU3xdw_jautZaA0aKCv-REvpzEz1KH_E";
+public class PushNotificationAdapter {                                       
+    private static final String API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxNDlkMmQ4OC0yNjE0LTQwNGEtOGNjOS04MTllOWMzZmU0MDkifQ.Sfz9Y4u2SRDof1_LrPoyKjWKjTJVwLCgx_7ZGzAKx70";
     private static final String PROFILE_NAME = "yakukawsay";
     private static final String URL = "https://api.ionic.io/push/notifications";
   
