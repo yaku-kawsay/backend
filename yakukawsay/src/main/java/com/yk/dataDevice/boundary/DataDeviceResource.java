@@ -5,6 +5,7 @@
  */
 package com.yk.dataDevice.boundary;
 
+import com.yk.entity.Data;
 import com.yk.entity.Device;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
@@ -21,6 +22,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 
@@ -42,27 +44,10 @@ public class DataDeviceResource {
     @Inject
     DeviceControl control;
     
-    // @RolesAllowed({"USER"})
-    @POST
-    @Path("/deviceId")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @ApiOperation(value = "Send data ", response = JsonObject.class)
-    public JsonObject dataDevice(@PathParam("deviceId") Long id, JsonObject data) {
-        control.validateDeviceData(data);
-        
-        Device device = service.create(data);
-        
-        JsonObject response = Json.createObjectBuilder()
-                .add("message", "success")
-                .add("id", device.getId())
-                .build();
-        return response;
-    }
-
     @GET
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Get all ", response = JsonObject.class)
-    public List<Device> getAll(@PathParam("id") Long id) {
+    public List<Device> getAll() {
         return service.getAll();
     }
 
@@ -70,8 +55,46 @@ public class DataDeviceResource {
     @Path("/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "get device", response = JsonObject.class)
-    public Device getDevice(@PathParam("id") Long id) {
+    public Device getDevice(@PathParam("id") Integer id) {
         return service.getDevice(id);
     }
     
+    // @RolesAllowed({"USER"})
+    @POST
+    @Path("/{id}/datas")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @ApiOperation(value = "Send data ", response = JsonObject.class)
+    public JsonObject dataDevice(@PathParam("id") Integer id, JsonObject data) {
+        control.validateDeviceData(data);
+        
+        Data dataEntity = service.registerData(id, data);
+        
+        JsonObject response = Json.createObjectBuilder()
+                .add("message", "success")
+                .add("id", dataEntity.getId())
+                .build();
+        return response;
+    }
+    
+    @GET
+    @Path("/{id}/datas")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @ApiOperation(value = "Get All Datas", response = JsonObject.class)
+    public List<Data> getAllDatas(@PathParam("id") Integer id) {
+        return service.getAllDatas(id);
+    }
+    
+    @GET
+    @Path("/{id}/calculation")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @ApiOperation(value = "Calculate", response = JsonObject.class)
+    public Double getCalculation(@PathParam("id") Integer id, 
+            @QueryParam("iniDate") String iniDate, 
+            @QueryParam("endDate") String endDate, 
+            @QueryParam("scope") String scope) {
+        control.validateCalculationData(iniDate, endDate, scope);
+        // return service.calculate(iniDate, endDate);
+        return 0.0;
+    }
+
 }

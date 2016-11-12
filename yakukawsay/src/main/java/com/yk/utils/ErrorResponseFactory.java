@@ -5,9 +5,6 @@
  */
 package com.yk.utils;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
@@ -23,7 +20,8 @@ public class ErrorResponseFactory {
     public static void throwBadRequest(String errorCode) {
         Response response = CustomResponseFactory.createResponse(errorCode,
             Response.Status.BAD_REQUEST,
-            "http://errores.bisa.com");
+            "http://yakukawsay.com");
         throw new YakuKawsayException(response);
     }
+
 }

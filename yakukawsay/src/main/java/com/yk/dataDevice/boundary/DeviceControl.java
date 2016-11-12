@@ -14,7 +14,11 @@ import javax.json.JsonObject;
 public class DeviceControl {
     
     void validateDeviceData(JsonObject json) {
-        
+        // TODO: validate data
+    }
+
+    void validateCalculationData(String iniDate, String endDate, String scope) {
+        // TODO: validate data
     }
     
 }

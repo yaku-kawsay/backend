@@ -33,10 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Data.findAll", query = "SELECT d FROM Data d"),
     @NamedQuery(name = "Data.findByDate", query = "SELECT d FROM Data d WHERE d.date = :date"),
-    @NamedQuery(name = "Data.findByValue", query = "SELECT d FROM Data d WHERE d.value = :value")})
+    @NamedQuery(name = "Data.findByValue", query = "SELECT d FROM Data d WHERE d.value = :value"),
+    @NamedQuery(name = Data.FIND_BY_DEVICE, query = "SELECT d FROM Data d WHERE d.deviceId = :device")})
 public class Data implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String FIND_BY_DEVICE = "Data.findByDeviceId";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
