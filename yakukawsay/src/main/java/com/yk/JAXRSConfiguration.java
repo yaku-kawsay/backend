@@ -19,7 +19,7 @@ public class JAXRSConfiguration extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new HashSet();
         
-        //Currency
+        // data device
         resources.add(DataDeviceResource.class);
 
         //Swagger configuration

@@ -15,13 +15,15 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ubuntu
+ * @author jhonnyC
  */
 public class Resources {
+
     @Produces
     @PersistenceContext
     private EntityManager em;
     
+    @Produces
     public CrudService produceCrudService() {
         return new CrudServiceBean(this.em);
     }

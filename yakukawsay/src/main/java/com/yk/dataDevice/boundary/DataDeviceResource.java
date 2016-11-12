@@ -14,25 +14,23 @@ import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author jhamil
  */
-@Singleton
-@AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
-@Path("/")
+@Path("devices")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
+@Singleton
 public class DataDeviceResource {
     
     @Inject
@@ -43,7 +41,7 @@ public class DataDeviceResource {
     
     // @RolesAllowed({"USER"})
     @POST
-    @Path("")
+    @Path("/deviceId")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Send data ", response = JsonObject.class)
     public JsonObject dataDevice(@PathParam("deviceId") Long id, JsonObject data) {
@@ -59,7 +57,6 @@ public class DataDeviceResource {
     }
 
     @GET
-    @Path("")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Get all ", response = JsonObject.class)
     public List<Device> getAll(@PathParam("id") Long id) {

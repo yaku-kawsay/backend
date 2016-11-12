@@ -10,9 +10,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,11 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Data.findAll", query = "SELECT d FROM Data d"),
-    @NamedQuery(name = "Data.findById", query = "SELECT d FROM Data d WHERE d.dataPK.id = :id"),
     @NamedQuery(name = "Data.findByDate", query = "SELECT d FROM Data d WHERE d.date = :date"),
-    @NamedQuery(name = "Data.findByValue", query = "SELECT d FROM Data d WHERE d.value = :value"),
-    @NamedQuery(name = "Data.findByDeviceid", query = "SELECT d FROM Data d WHERE d.dataPK.deviceid = :deviceid"),
-    @NamedQuery(name = "Data.findByDevicetypeindicatorid", query = "SELECT d FROM Data d WHERE d.dataPK.devicetypeindicatorid = :devicetypeindicatorid")})
+    @NamedQuery(name = "Data.findByValue", query = "SELECT d FROM Data d WHERE d.value = :value")})
 public class Data implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +50,19 @@ public class Data implements Serializable {
     @Column(name = "value")
     private long value;
 
+    @JoinColumn(name = "device_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Device deviceId;
+
     public Data() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -67,6 +79,14 @@ public class Data implements Serializable {
 
     public void setValue(long value) {
         this.value = value;
+    }
+
+    public Device getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Device deviceId) {
+        this.deviceId = deviceId;
     }
     
     @Override

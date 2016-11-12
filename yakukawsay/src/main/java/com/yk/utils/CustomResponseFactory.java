@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author ubuntu
+ * @author jhonnyC
  */
 public class CustomResponseFactory {
     

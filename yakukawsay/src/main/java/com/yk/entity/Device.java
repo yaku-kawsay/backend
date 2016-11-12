@@ -6,15 +6,21 @@
 package com.yk.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,16 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Device.findAll", query = "SELECT d FROM Device d"),
-    @NamedQuery(name = "Device.findById", query = "SELECT d FROM Device d WHERE d.devicePK.id = :id"),
     @NamedQuery(name = "Device.findByModel", query = "SELECT d FROM Device d WHERE d.model = :model"),
     @NamedQuery(name = "Device.findByDate", query = "SELECT d FROM Device d WHERE d.date = :date"),
     @NamedQuery(name = "Device.findByLatitude", query = "SELECT d FROM Device d WHERE d.latitude = :latitude"),
-    @NamedQuery(name = "Device.findByLongitude", query = "SELECT d FROM Device d WHERE d.longitude = :longitude"),
-    @NamedQuery(name = "Device.findByTypeIndicatorId", query = "SELECT d FROM Device d WHERE d.devicePK.typeIndicatorId = :typeIndicatorId")})
+    @NamedQuery(name = "Device.findByLongitude", query = "SELECT d FROM Device d WHERE d.longitude = :longitude")})
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +70,13 @@ public class Device implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "longitude")
     private String longitude;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId", fetch = FetchType.LAZY)
+    private Collection<Data> dataCollection;
+    
+    @JoinColumn(name = "type_indicator_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private TypeIndicator typeIndicatorId;
 
     public Device() {
     }
@@ -113,6 +123,22 @@ public class Device implements Serializable {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public Collection<Data> getDataCollection() {
+        return dataCollection;
+    }
+
+    public void setDataCollection(Collection<Data> dataCollection) {
+        this.dataCollection = dataCollection;
+    }
+
+    public TypeIndicator getTypeIndicatorId() {
+        return typeIndicatorId;
+    }
+
+    public void setTypeIndicatorId(TypeIndicator typeIndicatorId) {
+        this.typeIndicatorId = typeIndicatorId;
     }
 
     @Override

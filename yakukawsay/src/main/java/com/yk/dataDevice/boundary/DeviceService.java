@@ -28,7 +28,7 @@ public class DeviceService {
     
     @Inject
     CrudService crud;
-    
+
     @Inject
     Logger log;
 
