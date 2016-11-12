@@ -62,7 +62,6 @@ public class DataDeviceResource {
     // @RolesAllowed({"USER"})
     @POST
     @Path("/{id}/datas")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Send data ", response = JsonObject.class)
     public JsonObject dataDevice(@PathParam("id") Integer id, JsonObject data) {
         control.validateDeviceData(data);

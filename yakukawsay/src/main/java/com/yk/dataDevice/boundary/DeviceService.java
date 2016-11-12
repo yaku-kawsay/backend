@@ -49,7 +49,7 @@ public class DeviceService {
         return device;
     }
     
-    Device create(JsonObject data) {
+    public Device create(JsonObject data) {
         Device device = new Device();
         device.setDate(new Date());
         device.setLatitude(data.getString("latitude"));
@@ -66,11 +66,11 @@ public class DeviceService {
         return device;
     }
 
-    Data registerData(Integer id, JsonObject data) {
+    public Data registerData(Integer id, JsonObject data) {
         Device device = getDevice(id);
         Data dataEntity = new Data();
         dataEntity.setDate((new Date()).toString()); // TODO: use the correct type
-        dataEntity.setValue(Long.parseLong(data.getString("value")));
+        dataEntity.setValue(data.getJsonNumber("value").longValue());
         dataEntity.setDeviceId(device);
         
         try {
