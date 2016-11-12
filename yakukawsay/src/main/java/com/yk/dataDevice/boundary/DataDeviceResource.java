@@ -7,6 +7,7 @@ package com.yk.dataDevice.boundary;
 
 import com.yk.entity.Device;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.ejb.AccessTimeout;
@@ -22,11 +23,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+
 /**
  *
  * @author jhamil
  */
 @Path("devices")
+@Api(value = "API for device operations")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @AccessTimeout(value = 10, unit = TimeUnit.MINUTES)
