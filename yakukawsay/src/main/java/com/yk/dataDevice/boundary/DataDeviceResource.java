@@ -7,6 +7,7 @@ package com.yk.dataDevice.boundary;
 
 import com.yk.entity.Data;
 import com.yk.entity.Device;
+import com.yk.entity.TypeIndicator;
 import com.yk.pushNotification.boundary.PushNotificationAdapter;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
@@ -53,7 +54,8 @@ public class DataDeviceResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @ApiOperation(value = "Get all ", response = JsonObject.class)
     public List<Device> getAll() {
-        return service.getAll();
+        List<Device> devices  = service.getAll();
+        return devices;
     }
 
     @GET
@@ -78,8 +80,13 @@ public class DataDeviceResource {
                 .add("id", dataEntity.getId())
                 .build();
         
-
-        pushNotification.sendPost("Sensor" + dataEntity.getDeviceId().getId() + ": " + dataEntity.getValue(), null, "Yakukawsay", true, null);
+        String type = data.getString("type");
+        if (control.ableToTriggerGoodNotification(dataEntity.getValue(), type)){
+            pushNotification.sendPost(control.buldGoodNotification(dataEntity), null, "Yakukawsay", true, null);
+        } else if (control.ableToTriggerBadNotification(dataEntity.getValue(), type)){
+            pushNotification.sendPost(control.buldBadNotification(dataEntity), null, "Yakukawsay", true, null);
+        }
+        
         return response;
     }
     

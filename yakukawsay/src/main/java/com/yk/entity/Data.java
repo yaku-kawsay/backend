@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,7 +58,7 @@ public class Data implements Serializable {
     @NotNull
     @Column(name = "value")
     private long value;
-
+    
     @JoinColumn(name = "device_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Device deviceId;
@@ -89,7 +90,6 @@ public class Data implements Serializable {
         this.value = value;
     }
 
-    @XmlTransient
     public Device getDeviceId() {
         return deviceId;
     }
@@ -97,7 +97,7 @@ public class Data implements Serializable {
     public void setDeviceId(Device deviceId) {
         this.deviceId = deviceId;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

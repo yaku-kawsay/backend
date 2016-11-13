@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TypeIndicator.findByType", query = "SELECT t FROM TypeIndicator t WHERE t.type = :type")})
 public class TypeIndicator implements Serializable {
 
+    public static String TEMPERATURE = "temperature";
+    public static String HUMIDITY = "humidity";
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +57,7 @@ public class TypeIndicator implements Serializable {
     @Column(name = "unity")
     private String unity;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeIndicatorId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "typeIndicatorId", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Device> deviceCollection;
 
     public TypeIndicator() {
@@ -91,7 +95,8 @@ public class TypeIndicator implements Serializable {
     public void setUnity(String unity) {
         this.unity = unity;
     }
-
+    
+    @XmlTransient
     public Collection<Device> getDeviceCollection() {
         return deviceCollection;
     }

@@ -37,6 +37,7 @@ public class DeviceService {
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Device> getAll() {
+        //return crud.findWithNamedQuery(Device.FIND_ALL);
         return crud.findAll(Device.class);
     }
 

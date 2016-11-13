@@ -3,7 +3,7 @@
 
 -- TYPE INDICATOR
 INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`, `unity`) VALUES ('1', 'temperatura', 'grados');
-INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`, `unity`) VALUES ('2', 'humedad', 'grados');
+INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`, `unity`) VALUES ('2', 'humedad', '%');
 -- INSERT INTO `yakukawsay`.`type_indicator` (`id`, `type`, `unity`) VALUES ('3', 'nivelAgua', 'grados');
 
 -- DEVICES

@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "device")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Device.findAll", query = "SELECT d FROM Device d"),
+    @NamedQuery(name = Device.FIND_ALL, query = "SELECT d FROM Device d"),
     @NamedQuery(name = "Device.findByModel", query = "SELECT d FROM Device d WHERE d.model = :model"),
     @NamedQuery(name = "Device.findByDate", query = "SELECT d FROM Device d WHERE d.date = :date"),
     @NamedQuery(name = "Device.findByLatitude", query = "SELECT d FROM Device d WHERE d.latitude = :latitude"),
@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final String FIND_ALL = "Device.findAll";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,13 +76,13 @@ public class Device implements Serializable {
     @Basic(optional = true)
     @Size(min = 1, max = 45)
     @Column(name = "lastValue")
-    private long lastValue;
+    private Long lastValue;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId", fetch = FetchType.LAZY)
     private Collection<Data> dataCollection;
     
     @JoinColumn(name = "type_indicator_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TypeIndicator typeIndicatorId;
 
     public Device() {
@@ -115,6 +117,8 @@ public class Device implements Serializable {
     }
 
     public long getLastValue() {
+        if (lastValue == null)
+            return 0;
         return lastValue;
     }
 
@@ -147,7 +151,6 @@ public class Device implements Serializable {
         this.dataCollection = dataCollection;
     }
 
-    @XmlTransient
     public TypeIndicator getTypeIndicatorId() {
         return typeIndicatorId;
     }
