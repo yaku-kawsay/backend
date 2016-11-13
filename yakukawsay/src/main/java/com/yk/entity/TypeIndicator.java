@@ -47,6 +47,11 @@ public class TypeIndicator implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "type")
     private String type;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "unity")
+    private String unity;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeIndicatorId", fetch = FetchType.LAZY)
     private Collection<Device> deviceCollection;
@@ -77,6 +82,14 @@ public class TypeIndicator implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getUnity() {
+        return unity;
+    }
+
+    public void setUnity(String unity) {
+        this.unity = unity;
     }
 
     public Collection<Device> getDeviceCollection() {

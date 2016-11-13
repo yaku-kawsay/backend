@@ -71,6 +71,10 @@ public class Device implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "longitude")
     private String longitude;
+    @Basic(optional = true)
+    @Size(min = 1, max = 45)
+    @Column(name = "lastValue")
+    private long lastValue;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId", fetch = FetchType.LAZY)
     private Collection<Data> dataCollection;
@@ -108,6 +112,14 @@ public class Device implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public long getLastValue() {
+        return lastValue;
+    }
+
+    public void setLastValue(long lastValue) {
+        this.lastValue = lastValue;
     }
 
     public String getLatitude() {

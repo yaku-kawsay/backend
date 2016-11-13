@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 public class ErrorResponseFactory {
 
     public static void throwBadRequest(String errorCode, Exception e) {
-        throwBadRequest(errorCode);;
+        throwBadRequest(errorCode);
     }
     
     public static void throwBadRequest(String errorCode) {

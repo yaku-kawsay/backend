@@ -43,8 +43,10 @@ public class DeviceService {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Device getDevice(Integer id) {
         Device device = crud.find(Device.class, id);
-        if (device == null)
+        if (device == null) {
+            log.log(Level.SEVERE, "DeviceId: " + id);
             ErrorResponseFactory.throwBadRequest("EV0002");
+        }
 
         return device;
     }
@@ -69,17 +71,24 @@ public class DeviceService {
     public Data registerData(Integer id, JsonObject data) {
         Device device = getDevice(id);
         Data dataEntity = new Data();
-        dataEntity.setDate((new Date()).toString()); // TODO: use the correct type
-        dataEntity.setValue(data.getJsonNumber("value").longValue());
+        
+        long value = data.getJsonNumber("value").longValue();
+        
+        dataEntity.setDate(new Date());
+        dataEntity.setValue(value);
         dataEntity.setDeviceId(device);
+
+        // update most rescent data on device
+        device.setLastValue(value);
         
         try {
+            crud.update(device);
             dataEntity = crud.createFlush(dataEntity);
         } catch (Exception ex) {
             log.log(Level.SEVERE, "Something go wrong with the db", ex);
             ErrorResponseFactory.throwBadRequest("DB0001");
         }
-        
+
         return dataEntity;
     }
 
