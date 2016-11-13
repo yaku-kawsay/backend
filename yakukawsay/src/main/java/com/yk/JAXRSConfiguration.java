@@ -21,6 +21,8 @@ public class JAXRSConfiguration extends Application {
         
         // data device
         resources.add(DataDeviceResource.class);
+        
+        resources.add(CORSFilter.class);
 
         //Swagger configuration
         resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);

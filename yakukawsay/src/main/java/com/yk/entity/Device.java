@@ -27,6 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -125,6 +126,7 @@ public class Device implements Serializable {
         this.longitude = longitude;
     }
 
+    @XmlTransient
     public Collection<Data> getDataCollection() {
         return dataCollection;
     }
@@ -133,6 +135,7 @@ public class Device implements Serializable {
         this.dataCollection = dataCollection;
     }
 
+    @XmlTransient
     public TypeIndicator getTypeIndicatorId() {
         return typeIndicatorId;
     }
